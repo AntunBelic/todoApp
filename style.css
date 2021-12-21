@@ -1,0 +1,353 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+}
+
+:root {
+  --clr-background: rgb(252, 252, 252);
+  --clr-mainHeader: rgba(11, 22, 117, 0.9);
+  --clr-progress: #c6c0fc;
+  --clr-todoHeader: rgba(7, 3, 70, 0.7);
+  --clr-todoBody: rgba(11, 22, 117, 0.9);
+}
+
+/*START OF TOGGLE*/
+
+body {
+  background-color: var(--clr-background);
+  transition: background 0.2s linear;
+}
+
+body.dark {
+  --clr-background: #192428;
+  --clr-mainHeader: #2d383c;
+  --clr-todoHeader: #39ace7;
+  --clr-todoBody: #0784b5;
+  --clr-progress: #39ace7;
+  --clr-newTask: rgba(25, 36, 40, 0.8);
+}
+
+.main-header {
+  background-color: var(--clr-mainHeader);
+}
+
+.label-theme {
+  background-color: #111;
+  border-radius: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  position: relative;
+  height: 26px;
+  width: 50px;
+  transform: scale(1);
+  margin-bottom: 0px;
+}
+
+.label-theme .ball {
+  background-color: var(--clr-progress);
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  height: 22px;
+  width: 22px;
+  transform: translateX(0px);
+  transition: transform 0.2s linear;
+}
+
+.theme-checkbox:checked + .label-theme .ball {
+  transform: translateX(24px);
+}
+
+.fa-moon {
+  color: var(--clr-progress);
+}
+
+.fa-sun {
+  color: var(--clr-progress);
+}
+
+.theme-toggler {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.language-checkbox {
+  opacity: 0;
+  position: absolute;
+}
+
+.label-language {
+  background-color: #111;
+  border-radius: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  position: relative;
+  height: 26px;
+  width: 62px;
+  transform: scale(1);
+  margin-bottom: 0px;
+}
+
+.label-language .ball {
+  background-color: var(--clr-progress);
+  border-radius: 25px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  height: 22px;
+  width: 31px;
+  transform: translateX(0px);
+  transition: transform 0.2s linear;
+}
+
+.language-checkbox:checked + .label-language .ball {
+  transform: translateX(27px);
+}
+
+.lang {
+  color: var(--clr-progress);
+  padding-left: 2px;
+}
+
+/*END OF TOGGLE*/
+
+#logo {
+  color: var(--clr-progress);
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.all-tasks {
+  margin-top: 8rem;
+  max-width: 250px;
+}
+
+.task-list {
+  line-height: 1.9;
+  list-style: none;
+  padding-left: 1.2em;
+}
+
+.task-list-title {
+  color: var(--clr-todoHeader);
+}
+
+.list-name {
+  cursor: pointer;
+  color: var(--clr-todoBody);
+  font-weight: 550;
+}
+
+.list-name:hover {
+  opacity: 0.8;
+}
+
+.active-list {
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: var(--clr-todoHeader);
+}
+
+form {
+  display: flex;
+}
+
+.all-tasks .input-form {
+  color: var(--clr-todoBody);
+  border-bottom: 2px solid var(--clr-todoBody);
+}
+.all-tasks .input-form:focus-within {
+  border-bottom: 4px solid var(--clr-todoBody);
+}
+
+.all-tasks form .btna.create {
+  color: var(--clr-todoBody);
+}
+.all-tasks form input {
+  color: var(--clr-todoBody);
+}
+
+.all-tasks form input::placeholder {
+  color: var(--clr-todoBody);
+  opacity: 0.6;
+}
+
+.all-tasks form .new:focus::placeholder {
+  opacity: 0.3;
+}
+
+.btna.create {
+  width: 2em;
+  height: 2em;
+  transition: opacity, transform 200ms ease-in-out;
+  outline: transparent;
+  cursor: pointer;
+  background: 0;
+  border: 0;
+  padding: 0;
+  color: var(--clr-background);
+}
+
+.btna:hover {
+  opacity: 0.6;
+  transform: scale(1.2);
+}
+
+.input-form {
+  border-bottom: 2px solid var(--clr-background);
+  transition: border-bottom 200ms ease-in-out;
+  width: 100%;
+}
+
+.new {
+  background: transparent;
+  border: none;
+  color: var(--clr-background);
+  outline: none;
+  width: 100%;
+  overflow: hidden;
+}
+
+.new::placeholder {
+  padding-left: 1em;
+  color: var(--clr-newTask);
+}
+
+.input-form:focus-within {
+  border-bottom: 4px solid var(--clr-background);
+}
+
+.new:focus::placeholder {
+  opacity: 0.6;
+}
+
+.todo-header {
+  padding: 2rem;
+  background: var(--clr-todoHeader);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top-left-radius: 9px;
+  border-top-right-radius: 9px;
+}
+
+.list-title {
+  margin: 0 1em 0 0;
+}
+.task-count {
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+.todo-body {
+  padding: 2rem;
+  position: relative;
+  border-radius: 10px;
+}
+
+.todo-list {
+  margin-top: 3rem;
+  max-width: 450px;
+  padding: 0;
+  margin-bottom: 3rem;
+  border-radius: 10px;
+  background-color: var(--clr-todoBody);
+  color: var(--clr-background);
+}
+
+[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+}
+
+.task label {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-bottom: 1.25em;
+}
+
+.task label::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: -50%;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.2;
+}
+
+.custom-checkbox {
+  --size: 0.75em;
+
+  display: inline-block;
+  width: var(--size);
+  height: var(--size);
+  margin-right: var(--size);
+  cursor: pointer;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  transform: scale(1);
+  transition: transform 250ms ease-in-out;
+}
+
+.task:hover .custom-checkbox {
+  transform: scale(1.2);
+}
+
+.task:hover > :not(.custom-checkbox, .check) {
+  opacity: 0.7;
+}
+
+.check:checked + label .custom-checkbox {
+  background: currentColor;
+  box-shadow: inset 0 0 0 1px var(--clr-todoBody);
+}
+
+.check:checked + label {
+  opacity: 0.4;
+  text-decoration: line-through;
+}
+
+.delete-stuff {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: absolute;
+  bottom: -25px;
+  padding: 0 2em 0 2em;
+  left: 0;
+}
+
+.btns.delete {
+  font-size: 0.75rem;
+  font-weight: 800;
+  opacity: 0.8;
+  transition: opacity 200ms ease-in-out;
+  cursor: pointer;
+  background: 0;
+  border: 0;
+  color: var(--clr-todoHeader);
+  outline: transparent;
+}
+
+.btns.delete:hover {
+  opacity: 1;
+}
+
+.new-task-creator {
+  margin-top: 5rem;
+  bottom: 5px;
+}
