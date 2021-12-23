@@ -48,6 +48,9 @@ listContainer.addEventListener("click", e => {
     if(e.target.tagName.toLowerCase()=== "li") {
         selectedListId = e.target.dataset.listId
         saveAndRender()
+    } else if (e.target.tagName.toLowerCase()=== "span"){
+        selectedListId = e.target.parentElement.dataset.listId
+        saveAndRender()
     }
 })
 
@@ -56,7 +59,7 @@ taskContainer.addEventListener("click", e => {
         const selectedList = lists.find(list => list.id === selectedListId)
         const selectedTask = selectedList.tasks.find(task => task.id === e.target.id)
         selectedTask.complete = e.target.checked
-        save()
+        saveAndRender()
         renderTaskCount(selectedList)
     }
 })
@@ -150,10 +153,11 @@ function renderTaskCount(selectedList) {
 
 function renderList() {
     lists.forEach(list => {
+        const incompleteTaskCount = list.tasks.filter(task => !task.complete).length
         const listElement = document.createElement("li")
         listElement.dataset.listId = list.id
         listElement.classList.add("list-name")
-        listElement.innerText = list.name
+        listElement.innerHTML = `<span>${list.name}</span> <span>${incompleteTaskCount}</span>`
         if (list.id === selectedListId) {
             listElement.classList.add("active-list")
         }

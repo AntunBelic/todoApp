@@ -147,6 +147,12 @@ body.dark {
   cursor: pointer;
   color: var(--clr-todoBody);
   font-weight: 550;
+  display: flex;
+  justify-content: space-between;
+}
+
+.list-name span {
+  pointer-events: inherit;
 }
 
 .list-name:hover {
@@ -259,6 +265,7 @@ form {
 .todo-list {
   margin-top: 3rem;
   max-width: 450px;
+  height: 100%;
   padding: 0;
   margin-bottom: 3rem;
   border-radius: 10px;
