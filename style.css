@@ -4,11 +4,11 @@
 }
 
 :root {
-  --clr-background: rgb(252, 252, 252);
-  --clr-mainHeader: rgba(11, 22, 117, 0.9);
-  --clr-progress: #c6c0fc;
-  --clr-todoHeader: rgba(7, 3, 70, 0.7);
-  --clr-todoBody: rgba(11, 22, 117, 0.9);
+  --clr-background: rgb(238, 238, 238);
+  --clr-mainHeader: rgb(7, 55, 99);
+  --clr-progress: rgb(207, 226, 243);
+  --clr-todoHeader: rgb(7, 55, 99);
+  --clr-todoBody: rgb(61, 133, 198);
 }
 
 /*START OF TOGGLE*/
@@ -136,7 +136,7 @@ body.dark {
 .task-list {
   line-height: 1.9;
   list-style: none;
-  padding-left: 1.2em;
+  padding: 0;
 }
 
 .task-list-title {
@@ -149,10 +149,12 @@ body.dark {
   font-weight: 550;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .list-name span {
-  pointer-events: inherit;
+  word-break: break-all;
+  padding: 0 1rem;
 }
 
 .list-name:hover {
@@ -250,6 +252,7 @@ form {
 
 .list-title {
   margin: 0 1em 0 0;
+  word-break: break-all;
 }
 .task-count {
   margin: 0;
@@ -264,6 +267,7 @@ form {
 
 .todo-list {
   margin-top: 3rem;
+  min-width: 300px;
   max-width: 450px;
   height: 100%;
   padding: 0;
@@ -283,6 +287,7 @@ form {
   align-items: center;
   position: relative;
   margin-bottom: 1.25em;
+  word-break: break-all;
 }
 
 .task label::after {
@@ -290,7 +295,7 @@ form {
   position: absolute;
   right: 0;
   left: 0;
-  bottom: -50%;
+  bottom: -20%;
   height: 1px;
   background: currentColor;
   opacity: 0.2;
@@ -300,8 +305,8 @@ form {
   --size: 0.75em;
 
   display: inline-block;
-  width: var(--size);
-  height: var(--size);
+  min-width: var(--size);
+  min-height: var(--size);
   margin-right: var(--size);
   cursor: pointer;
   border: 2px solid currentColor;
@@ -355,6 +360,20 @@ form {
 }
 
 .new-task-creator {
-  margin-top: 5rem;
+  margin-top: 3rem;
   bottom: 5px;
+}
+
+@media (max-width: 575.98px) {
+  .all-tasks {
+    margin-top: 4rem;
+    max-width: 100%;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  .todo-list {
+    max-width: 100%;
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
 }
