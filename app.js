@@ -1,22 +1,9 @@
-// DARK MODE TOGGLE
+//TOGGLE LIST
 
 const chk = document.getElementById('chk');
-
-chk.addEventListener('change', () => {
-	document.body.classList.toggle('dark');
-});
-
-// LANGUAGE TOGGLE
-
 const chk_l = document.getElementById('chk-l');
-
-chk_l.addEventListener("change", () => {
-    const logoEL = document.getElementById("logo");
-    if (logoEL.innerHTML === "2 do list") {
-        logoEL.innerHTML = "Lista zadataka"
-    } else {
-        logoEL.innerHTML = "2 do list"}
-})
+const logoEL = document.getElementById("logo");
+const listTitleEL = document.getElementById("category")
 
 //CATEGORY LIST
 
@@ -38,10 +25,31 @@ const clearCompleteTaskButton = document.querySelector("[data-clear-complete-tas
 
 const LOCAL_STORAGE_LIST_KEY = "task.list"
 const LOCAL_STORAGE_SELECTED_LIST_ID_KEY = "task.selectedListId"
+const LOCAL_STORAGE_MODE_KEY = "mode"
+const LOCAL_STORAGE_LANG_KEY = "lang"
 
 
 let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
 let selectedListId = localStorage.getItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY)
+
+const translation  = {
+    en:{
+        title: "2do list",
+        category: "Category",
+        category_placeholder: "New category",
+        task_placeholder: "New task",
+        clearBtn: "Clear completed",
+        deleteBtn: "Delete list"
+    },
+    hr:{
+        title: "Lista zadataka",
+        category: "Kategorije",
+        category_placeholder: "Nova kategorija",
+        task_placeholder: "Novi zadatak",
+        clearBtn: "Očisti završene",
+        deleteBtn: "Obriši listu"
+    }
+}
 
 
 listContainer.addEventListener("click", e => {
@@ -113,6 +121,8 @@ function saveAndRender() {
 function save() {
     localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists))
     localStorage.setItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY,selectedListId)
+    localStorage.setItem(LOCAL_STORAGE_MODE_KEY,chk.checked)
+    localStorage.setItem(LOCAL_STORAGE_LANG_KEY,chk_l.checked)
 }
 
 function render() {
@@ -171,4 +181,52 @@ function clearElement(element) {
     }
 }
 
+// DARK MODE TOGGLE
+
+chk.addEventListener('change', () => {
+    if(chk.checked){
+        mode = "light"
+    }else{
+        mode = "dark"
+    }
+    dark(mode);
+    save()
+});
+
+function dark() {
+    if(mode === "light"){
+        document.body.classList.add("dark")
+    }else{
+        document.body.classList.remove('dark');
+    }
+}
+
+// LANGUAGE TOGGLE
+
+chk_l.addEventListener("change", () => {
+    if(chk_l.checked){
+        lang = "hr"
+    }else{
+        lang = "en"
+    }
+
+    translate(lang);
+    save()
+    
+})
+
+function translate(lang) {
+    logoEL.innerText = translation[lang].title
+    listTitleEL.innerText = translation[lang].category
+    newListInput.placeholder = translation[lang].category_placeholder
+    newTaskInput.placeholder = translation[lang].task_placeholder
+    clearCompleteTaskButton.innerText = translation[lang].clearBtn
+    deleteListButton.innerText = translation[lang].deleteBtn
+
+}
+
 render();
+
+//-render
+//-local storage drzi state toggla(chekboxa)
+//-funkcija koja mijenja translation

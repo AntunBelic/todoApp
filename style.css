@@ -368,12 +368,12 @@ form {
   .all-tasks {
     margin-top: 4rem;
     max-width: 100%;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
   }
   .todo-list {
     max-width: 100%;
-    margin-left: 2rem;
-    margin-right: 2rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
   }
 }
