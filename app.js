@@ -30,7 +30,9 @@ const LOCAL_STORAGE_LANG_KEY = "lang"
 
 
 let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
-let selectedListId = localStorage.getItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY)
+let selectedListId = localStorage.getItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY);
+let mode = JSON.parse(localStorage.getItem(LOCAL_STORAGE_MODE_KEY));
+let lang = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LANG_KEY));
 
 const translation  = {
     en:{
@@ -39,7 +41,13 @@ const translation  = {
         category_placeholder: "New category",
         task_placeholder: "New task",
         clearBtn: "Clear completed",
-        deleteBtn: "Delete list"
+        deleteBtn: "Delete list",
+        taskMulti: "tasks",
+        taskSingle: "task",
+        task_2_4: "tasks",
+        remainingMulti: "remaining",
+        remainingSingle: "remaining",
+        remaining_2_4: "remaining"
     },
     hr:{
         title: "Lista zadataka",
@@ -47,7 +55,13 @@ const translation  = {
         category_placeholder: "Nova kategorija",
         task_placeholder: "Novi zadatak",
         clearBtn: "Očisti završene",
-        deleteBtn: "Obriši listu"
+        deleteBtn: "Obriši listu",
+        taskMulti: "zadataka",
+        taskSingle: "zadatak",
+        task_2_4: "zadatka",
+        remainingMulti: "preostalo",
+        remainingSingle: "preostao",
+        remaining_2_4: "preostala"
     }
 }
 
@@ -121,13 +135,15 @@ function saveAndRender() {
 function save() {
     localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists))
     localStorage.setItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY,selectedListId)
-    localStorage.setItem(LOCAL_STORAGE_MODE_KEY,chk.checked)
-    localStorage.setItem(LOCAL_STORAGE_LANG_KEY,chk_l.checked)
+    localStorage.setItem(LOCAL_STORAGE_MODE_KEY,JSON.stringify(mode))
+    localStorage.setItem(LOCAL_STORAGE_LANG_KEY,JSON.stringify(lang))
 }
 
 function render() {
     clearElement(listContainer)
     renderList()
+    dark(mode)
+    translate(lang)
 
     const selectedList = lists.find(list => list.id === selectedListId)
     if(selectedListId == null) {
@@ -156,8 +172,21 @@ function renderTasks(selectedList) {
 
 function renderTaskCount(selectedList) {
     const incompleteTaskCount = selectedList.tasks.filter(task => !task.complete).length
-    const taskString = incompleteTaskCount === 1 ? "task" : "tasks"
-    listCountElement.innerText = `${incompleteTaskCount} ${taskString} remaining`
+    
+    switch (incompleteTaskCount) {
+        
+        case 1:
+            listCountElement.innerText = `${incompleteTaskCount} ${translation[lang].taskSingle} ${translation[lang].remainingSingle}`
+            break;
+        case 2:
+        case 3:
+        case 4:
+            listCountElement.innerText = `${incompleteTaskCount} ${translation[lang].task_2_4} ${translation[lang].remaining_2_4}`
+            break;    
+        default:
+            listCountElement.innerText = `${incompleteTaskCount} ${translation[lang].taskMulti} ${translation[lang].remainingMulti}`
+            break;
+    }
 
 }
 
@@ -185,21 +214,24 @@ function clearElement(element) {
 
 chk.addEventListener('change', () => {
     if(chk.checked){
-        mode = "light"
-    }else{
         mode = "dark"
+    }else{
+        mode = "light"
     }
-    dark(mode);
-    save()
+    saveAndRender()
 });
 
-function dark() {
-    if(mode === "light"){
+function dark(mode) {
+    if(mode === "dark"){
         document.body.classList.add("dark")
+        chk.checked = true;
     }else{
         document.body.classList.remove('dark');
+        chk.checked = false;
     }
 }
+
+
 
 // LANGUAGE TOGGLE
 
@@ -210,8 +242,7 @@ chk_l.addEventListener("change", () => {
         lang = "en"
     }
 
-    translate(lang);
-    save()
+    saveAndRender()
     
 })
 
@@ -223,10 +254,18 @@ function translate(lang) {
     clearCompleteTaskButton.innerText = translation[lang].clearBtn
     deleteListButton.innerText = translation[lang].deleteBtn
 
+    if(lang === "hr"){
+        chk_l.checked = true;
+    }else{
+        chk_l.checked = false;
+    }
+
 }
+
+
 
 render();
 
 //-render
-//-local storage drzi state toggla(chekboxa)
-//-funkcija koja mijenja translation
+//-local storage drzi state toggla(chekboxa)-
+//-funkcija koja mijenja translation-
